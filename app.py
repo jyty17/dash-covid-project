@@ -35,6 +35,8 @@ app = dash.Dash(
 	external_scripts=external_js
 	)
 
+server = app.server
+
 app.index_string = '''
 <!DOCTYPE html>
 <html>
