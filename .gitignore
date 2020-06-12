@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+layouts.py
+index.py
+favicon_io/
+Pipfile
+Pipfile.lock
