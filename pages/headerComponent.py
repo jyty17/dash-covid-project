@@ -16,7 +16,7 @@ def get_logo():
     logo = html.Div([
 
         html.Div([
-            html.Img(src='/assets/SARS-CoV-2.png', alt="", height='150')
+            html.Img(src='/assets/SARS-CoV-2.png', alt="", height='100')
         ], className="ten columns padded"),
 
         # html.Div([
