@@ -5,3 +5,4 @@ index.py
 favicon_io/
 Pipfile
 Pipfile.lock
+performance.py
