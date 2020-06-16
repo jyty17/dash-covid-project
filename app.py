@@ -17,7 +17,7 @@ external_css = ["https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normaliz
                	"https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css",
                	"https://fonts.googleapis.com/css?family=Raleway:400,300,600",
                 "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-                "https://raw.githubusercontent.com/plotly/dash-sample-apps/master/apps/dash-financial-report/assets/base.css",
+                # "https://raw.githubusercontent.com/plotly/dash-sample-apps/master/apps/dash-financial-report/assets/base.css",
                 'https://codepen.io/chriddyp/pen/bWLwgP.css',
                 "https://codepen.io/bcd/pen/KQrXdb.css",
                 "https://codepen.io/dmcomfort/pen/JzdzEZ.css",]
@@ -59,10 +59,18 @@ app.index_string = '''
 '''
 app.title = 'Covid19 Reports'
 
-app.layout = html.Div([
+default_layout = html.Div([
 	dcc.Location(id='url', refresh=False),
 	html.Div(id='page-content')
 ])
+
+app.layout = default_layout
+# app.validation_layout = html.Div([
+#     default_layout,
+#     nationalDisplay.create_layout(app),
+#     display.create_layout(app)
+#     ])
+# nationalDisplay.create_layout(app)
 
 
 # Update page
@@ -71,11 +79,11 @@ app.layout = html.Div([
               [Input('url', 'pathname')])
 def display_page(pathname):
 	if pathname == '/national':
-		return nationalDisplay.nationalDisplay
+		return nationalDisplay.create_layout(app)
 	elif pathname == '/international':
-		return internationalDisplay.internationalDisplay
+		return internationalDisplay.create_layout(app)
 	else:
-		return display.default_display
+		return display.create_layout(app)
 
 
     # if pathname == '/cc-travel-report' or pathname == '/cc-travel-report/overview-birst/':
@@ -93,7 +101,7 @@ def display_page(pathname):
     # else:
     #     return noPage
 
-# app.config.suppress_callback_exceptions = True
+app.config.suppress_callback_exceptions = True
 
 if __name__ == '__main__':
 	app.run_server(debug=True)

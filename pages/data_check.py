@@ -51,11 +51,11 @@ cols = [
 
 
 
-df = pd.read_csv('data/covid-data.csv', usecols=cols)
+df = pd.read_csv('data/owid-covid-data.csv', usecols=cols)
 # .dropna()
 # df_nan = df.dropna()
 
-df_global_cases = df.loc[df['iso_code'] == 'OWID_WRL']
+df_global_cases = df.loc[df.location == 'World']
 
 # print(df_global_cases, df_global_cases['date'])
 

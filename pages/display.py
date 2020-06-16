@@ -5,17 +5,17 @@ import plotly.express as px
 
 import pathlib
 import os
+import pandas as pd
 
 from .headerComponent import Header
 
 from .data_check import df_global_cases as gc
 
+# import datetime as dt
 
 # get relative data folder
 # PATH = pathlib.Path(__file__).parent
 # DATA_PATH = PATH.joinpath("../data").resolve()
-
-
 
 colors = {
     'background': '#FFFFFF',
@@ -58,26 +58,32 @@ fig.update_layout(
 # 	row=1,
 # 	col=2)
 
-last = gc.tail()
+last = gc.tail(1)
+print(last, '\n', last['date'])
 
-default_display = html.Div([
-	html.Div([
-		Header(),
-	    dcc.Graph(
-	    	id="general_graph",
-	    	figure=fig
-    	),
+def create_layout(app):
+	default_display = html.Div([
 		html.Div([
+			Header(),
+		    dcc.Graph(
+		    	id="general_graph",
+		    	figure=fig
+	    	),
 			html.Div([
-				html.H1('Total Infected as of {}'.format('** last updated time **')),
-				html.H2(last['total_cases']),
-				], className='column row'),
-			html.Div([
-				html.H1('Total Deaths as of {}'.format('** last updated time **')),
-				html.H2(last['total_deaths'])
-				], className='column row')
+				html.Div([
+					html.H4('Total Infected as of {}'.format(str(last['date'])),
+						className="padded twelve"),
+					html.H5(last.total_cases),
+					], className='row tab'),
+				html.Div([
+					html.H4('Total Deaths as of {}'.format(pd.to_datetime(last.date).dt.strftime('%m/%d/%y')),
+						className="padded"),
+					html.H5(last.total_deaths)
+					], className='row tab')
+				])
 			])
-		])
-	], className="page")
+		], className="page")
+
+	return default_display
 
 
