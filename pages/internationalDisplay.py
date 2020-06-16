@@ -28,20 +28,20 @@ df = pd.read_csv('data/owid-covid-data.csv')
 countries = df.location.unique()
 countries_option = [{'label': x, 'value': x} for x in countries]
 
-
+country_first = df[df.location == countries[0]]
 fig = go.Figure()
 fig.add_trace(
 	go.Scatter(
-		y=df[df.location == countries[0]].total_cases, #
-		x=df.date,
+		y=country_first.total_cases, #
+		x=country_first.date,
 		mode='lines',
 		name='Infected',
 		line={'color': 'firebrick'}
 	))
 fig.add_trace(
 	go.Scatter(
-		y=df[df.location == countries[0]].total_deaths, #
-		x=df.date,
+		y=country_first.total_deaths, #
+		x=country_first.date,
 		mode='lines',
 		name='Deaths',
 		line={'color': 'darkslateblue'}
@@ -61,7 +61,7 @@ def create_layout(app):
 			value=countries[0]
 			),
 		dcc.Graph(
-			id='national_graph',
+			id='world_graph',
 			figure=fig
 			),
 		html.Div([
@@ -79,34 +79,57 @@ def create_layout(app):
 		], className="page")
 
 	@app.callback(
-		Output('national_graph', 'figure'),
+		Output('world_graph', 'figure'),
 		[Input('country_dropdown', 'value')]
 		)
-	def update_state_data(dropdown_value):
-		print(df[df.state == dropdown_value])
-		newFig = go.Figure()
-		newFig.add_trace(
-			go.Scatter(
-				y=df[df.location == dropdown_value]['cases'], #
-				x=df['date'],
-				mode='lines',
-				name='Infected',
-				line={'color': 'firebrick'}
-			))
-		newFig.add_trace(
-			go.Scatter(
-				y=df[df.location == dropdown_value]['deaths'], #
-				x=df['date'],
-				mode='lines',
-				name='Deaths',
-				line={'color': 'darkslateblue'}
-			))
-		newFig.update_layout(
-			title=dropdown_value,
-			plot_bgcolor=colors['background'],
-			)
+	def update_country_data(dropdown_value):
+		print(df[df.location == dropdown_value])
 
-		return newFig
+		country_data = df[df.location == dropdown_value]
+
+		infected = go.Scatter(
+			y=country_data['total_cases'],
+			x=country_data.date,
+			mode='lines',
+			name='Infected',
+			line={'color': 'firebrick'}
+			)
+		deaths = go.Scatter(
+			y=country_data['total_deaths'],
+			x=country_data.date,
+			mode='lines',
+			name='Deaths',
+			line={'color': 'darkslateblue'}
+			)
+		# newFig = go.Figure()
+		# newFig.add_trace(
+		# 	go.Scatter(
+		# 		y=df[df.location == dropdown_value]['cases'], #
+		# 		x=df['date'],
+		# 		mode='lines',
+		# 		name='Infected',
+		# 		line={'color': 'firebrick'}
+		# 	))
+		# newFig.add_trace(
+		# 	go.Scatter(
+		# 		y=df[df.location == dropdown_value]['deaths'], #
+		# 		x=df['date'],
+		# 		mode='lines',
+		# 		name='Deaths',
+		# 		line={'color': 'darkslateblue'}
+		# 	))
+		# newFig.update_layout(
+		# 	title=dropdown_value,
+		# 	plot_bgcolor=colors['background'],
+		# 	)
+
+		return {
+			'data': [infected, deaths],
+			'layout': go.Layout(
+				title=dropdown_value,
+				plot_bgcolor=colors['background'],
+				)
+			}
 
 	@app.callback(
 		[
@@ -117,7 +140,7 @@ def create_layout(app):
 		)
 	def update_counts(dropdown_value):
 		last = df[df.location == dropdown_value].tail(1) #
-		return last['cases'], last['deaths']
+		return last['total_cases'], last['total_deaths']
 
 
 	return internationalDisplay

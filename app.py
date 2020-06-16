@@ -59,12 +59,13 @@ app.index_string = '''
 '''
 app.title = 'Covid19 Reports'
 
-default_layout = html.Div([
-	dcc.Location(id='url', refresh=False),
-	html.Div(id='page-content')
-])
+def default_layout(): 
+    return html.Div([
+    	dcc.Location(id='url', refresh=False),
+    	html.Div(id='page-content')
+    ])
 
-app.layout = default_layout
+app.layout = default_layout()
 # app.validation_layout = html.Div([
 #     default_layout,
 #     nationalDisplay.create_layout(app),

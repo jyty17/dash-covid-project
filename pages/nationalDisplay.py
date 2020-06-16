@@ -21,19 +21,20 @@ states = df.state.unique()
 states.sort()
 states_option = [{'label': x, 'value': x} for x in states]
 
+first = df[df.state == 'Alabama']
 fig = go.Figure()
 fig.add_trace(
 	go.Scatter(
-		y=df[df.state == 'Alabama'].cases,
-		x=df.date,
+		y=first.cases,
+		x=first.date,
 		mode='lines',
 		name='Infected',
 		line={'color': 'firebrick'}
 	))
 fig.add_trace(
 	go.Scatter(
-		y=df[df.state == 'Alabama'].deaths,
-		x=df.date,
+		y=first.deaths,
+		x=first.date,
 		mode='lines',
 		name='Deaths',
 		line={'color': 'darkslateblue'}
@@ -51,7 +52,7 @@ def create_layout(app):
 		dcc.Dropdown(
 			id='state_dropdown',
 			options=states_option,
-			value=states[0]
+			value=states_option[0]['value']
 			),
 		dcc.Graph(
 			id='national_graph',
@@ -93,7 +94,6 @@ def create_layout(app):
 			name='Deaths',
 			line={'color': 'darkslateblue'}
 			)
-
 
 		# newFig.add_trace(
 		# 	go.Scatter(
