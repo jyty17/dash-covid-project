@@ -26,13 +26,14 @@ colors = {
 
 df = pd.read_csv('data/owid-covid-data.csv')
 countries = df.location.unique()
+countries.sort()
 countries_option = [{'label': x, 'value': x} for x in countries]
 
 country_first = df[df.location == countries[0]]
 fig = go.Figure()
 fig.add_trace(
 	go.Scatter(
-		y=country_first.total_cases, #
+		y=country_first.total_cases,
 		x=country_first.date,
 		mode='lines',
 		name='Infected',
@@ -40,7 +41,7 @@ fig.add_trace(
 	))
 fig.add_trace(
 	go.Scatter(
-		y=country_first.total_deaths, #
+		y=country_first.total_deaths,
 		x=country_first.date,
 		mode='lines',
 		name='Deaths',

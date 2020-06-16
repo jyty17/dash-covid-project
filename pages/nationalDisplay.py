@@ -21,7 +21,7 @@ states = df.state.unique()
 states.sort()
 states_option = [{'label': x, 'value': x} for x in states]
 
-first = df[df.state == 'Alabama']
+first = df[df.state == states[0]]
 fig = go.Figure()
 fig.add_trace(
 	go.Scatter(
