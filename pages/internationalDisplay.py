@@ -56,7 +56,7 @@ def create_layout(app):
 	recent_data_point = df[df.location == countries[0]].tail(1)
 	internationalDisplay = html.Div([
 		Header(),
-		html.H1("Worldwide data on Covid-19 (NYTimes)"),
+		html.H1("Worldwide data on Covid-19 (OWID)"),
 		dcc.Dropdown(
 			id='country_dropdown',
 			options=countries_option,
