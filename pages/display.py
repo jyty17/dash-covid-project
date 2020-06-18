@@ -70,13 +70,14 @@ def create_layout(app):
 		    	figure=fig
 	    	),
 			html.Div([
+				html.H4(children="Last Updated: "+last.date, className=""),
 				html.Div([
-					html.H4('Total Infected as of {}'.format(str(last['date'])),
+					html.H4('Total Infected: ',
 						className="padded twelve"),
 					html.H5(last.total_cases),
 					], className='row tab'),
 				html.Div([
-					html.H4('Total Deaths as of {}'.format(pd.to_datetime(last.date).dt.strftime('%m/%d/%y')),
+					html.H4('Total Deaths: ',
 						className="padded"),
 					html.H5(last.total_deaths)
 					], className='row tab')

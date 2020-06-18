@@ -46,6 +46,7 @@ fig.update_layout(
 
 
 def create_layout(app):
+	recent_data_point = df[df.state == states[0]].tail(1)
 	nationalDisplay = html.Div([
 		Header(),
 		html.H1("USA data on Covid-19 (NYTimes)"),
@@ -59,15 +60,16 @@ def create_layout(app):
 			figure=fig
 			),
 		html.Div([
+			html.H4(children="Last Updated: "+recent_data_point.date, className=""),
 			html.Div([
-				html.H4('Total Infected as of {}'.format('** last updated time **'),
+				html.H4('Total Infected',
 					className="padded twelve"),
-				html.H5(id='state-infected'),
+				html.H5(children=recent_data_point.cases ,id='state-infected'),
 				], className='row tab'),
 			html.Div([
-				html.H4('Total Deaths as of {}'.format('** last updated time **'),
+				html.H4('Total Deaths',
 					className="padded twelve"),
-				html.H5(id='state-deaths')
+				html.H5(children=recent_data_point.deaths ,id='state-deaths')
 				], className='row tab')
 			])
 		], className="page")

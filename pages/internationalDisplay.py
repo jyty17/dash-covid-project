@@ -53,6 +53,7 @@ fig.update_layout(
 	)
 
 def create_layout(app):
+	recent_data_point = df[df.location == countries[0]].tail(1)
 	internationalDisplay = html.Div([
 		Header(),
 		html.H1("Worldwide data on Covid-19 (NYTimes)"),
@@ -66,15 +67,16 @@ def create_layout(app):
 			figure=fig
 			),
 		html.Div([
+			html.H4(children="Last Updated: "+recent_data_point.date, className=""),
 			html.Div([
-				html.H4('Total Infected as of {}'.format('** last updated time **'),
+				html.H4('Total Infected',
 					className="padded twelve"),
-				html.H5(id='country-infected'), #
+				html.H5(children=recent_data_point.total_cases,id='country-infected'), #
 				], className='row tab'),
 			html.Div([
-				html.H4('Total Deaths as of {}'.format('** last updated time **'),
+				html.H4('Total Deaths',
 					className="padded twelve"),
-				html.H5(id='country-deaths') #
+				html.H5(children=recent_data_point.total_deaths, id='country-deaths') #
 				], className='row tab')
 			])
 		], className="page")
