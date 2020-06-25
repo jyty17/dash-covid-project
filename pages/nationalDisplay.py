@@ -62,13 +62,11 @@ def create_layout(app):
 		html.Div([
 			html.H4(children="Last Updated: "+recent_data_point.date, className=""),
 			html.Div([
-				html.H4('Total Infected',
-					className="padded twelve"),
+				html.H4('Total Infected'),
 				html.H5(children=recent_data_point.cases ,id='state-infected'),
 				], className='row tab'),
 			html.Div([
-				html.H4('Total Deaths',
-					className="padded twelve"),
+				html.H4('Total Deaths'),
 				html.H5(children=recent_data_point.deaths ,id='state-deaths')
 				], className='row tab')
 			])

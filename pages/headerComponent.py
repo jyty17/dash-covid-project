@@ -12,6 +12,7 @@ SIDEBAR_STYLE = {
     "width": "275px",
     "padding": "0 1rem",
     "paddingTop": "20px",
+    "paddingLeft": "20px",
     # "background-color": "#f8f9fa",
     "background-color": "#9B85FF",
     'display': 'flex',
@@ -30,22 +31,24 @@ def get_logo():
     logo = html.Div([
 
         html.Div([
-            html.Img(src='/assets/SARS-CoV-2.png', alt="", height='100')
-        ], className="ten columns padded"),
+            html.Img(src='/assets/SARS-CoV-2.png', alt="", height='120', className="rotate")
+        ], className="py-5"),
 
         # html.Div([
         #     dcc.Link('Full View   ', href='/cc-travel-report/full-view')
         # ], className="two columns page-view no-print")
 
-    ], className="side-bar header")
+    ], className="")
     return logo
 
 
 def get_header():
     header = html.Div([
         html.Div([
-            html.H1('Covid-19 Case Report')
-        ], style={"font-size": "1.5rem"})
+            html.H1('Covid-19 Case Report', style={"font-size": "5rem"})
+        ], style={
+            "color": "#1D3461"
+            })
 
     ], className="header")
     return header
@@ -54,23 +57,25 @@ MENU_STYLE = {
     "color": "white"
 }
 TITLE_STYLE = {}
-ANCHOR_STYLE = {'fontSize': "3rem"}
+ANCHOR_STYLE = {
+    "fontSize": "3rem"
+    }
 
 def get_menu():
     menu = html.Div([
         html.H2("Navigation", style={'fontSize': '4rem'}),
 
-        dcc.Link('Overview   ', href='/', className="text-white", style=ANCHOR_STYLE),
+        dcc.Link('Overview   ', href='/', className="text-white py-2", style=ANCHOR_STYLE),
 
-        dcc.Link('World   ', href='/international', className="text-white", style=ANCHOR_STYLE),
+        dcc.Link('World   ', href='/international', className="text-white py-2", style=ANCHOR_STYLE),
 
-        dcc.Link('USA   ', href='/national', className="text-white", style=ANCHOR_STYLE),
+        dcc.Link('USA   ', href='/national', className="text-white py-2", style=ANCHOR_STYLE),
 
-        html.A('OWID   ', href='https://github.com/owid/covid-19-data/tree/master/public/data/', target="_blank", className="text-white", style=ANCHOR_STYLE),
+        html.A('OWID   ', href='https://github.com/owid/covid-19-data/tree/master/public/data/', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
 
-        html.A('NYTimes   ', href='https://github.com/nytimes/covid-19-data', target="_blank", className="text-white", style=ANCHOR_STYLE),
+        html.A('NYTimes   ', href='https://github.com/nytimes/covid-19-data', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
 
-        html.A('Github   ', href='/cc-travel-report/metasearch-and-travel-ads/', target="_blank", className="text-white", style=ANCHOR_STYLE),
+        html.A('Github   ', href='/cc-travel-report/metasearch-and-travel-ads/', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
 
     ], className="btn-group-vertical", style=MENU_STYLE)
     return menu

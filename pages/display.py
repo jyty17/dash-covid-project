@@ -70,18 +70,16 @@ def create_layout(app):
 		    	figure=fig
 	    	),
 			html.Div([
-				html.H4(children="Last Updated: "+last.date, className=""),
+				html.H1(children="Last Updated: "+last.date, className=""),
 				html.Div([
-					html.H4('Total Infected: ',
-						className="padded twelve"),
-					html.H5(last.total_cases),
+					html.H1('Total Infected: '),
+					html.H2(last.total_cases),
 					], className='row tab'),
 				html.Div([
-					html.H4('Total Deaths: ',
-						className="padded"),
-					html.H5(last.total_deaths)
+					html.H1('Total Deaths: '),
+					html.H2(last.total_deaths)
 					], className='row tab')
-				])
+				], className="d-flex flex-row justify-content-between w-75")
 			])
 		], className="page")
 

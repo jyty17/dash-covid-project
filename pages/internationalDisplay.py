@@ -24,8 +24,8 @@ colors = {
 }
 
 
-# df = pd.read_csv('data/owid-covid-data.csv')
-df = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
+df = pd.read_csv('data/owid-covid-data.csv')
+# df = pd.read_csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv')
 countries = df.location.unique()
 countries.sort()
 countries_option = [{'label': x, 'value': x} for x in countries]
@@ -56,7 +56,11 @@ country_first = df[df.location == countries[0]]
 def create_layout(app):
 	recent_data_point = df[df.location == countries[0]].tail(1)
 	internationalDisplay = html.Div([
-		html.H1("Worldwide data on Covid-19 (OWID)"),
+		html.H1("Worldwide data on Covid-19 (OWID)", 
+			style={
+				"font-size": "5rem",
+				"color": "#1D3461"
+			}),
 		dcc.Dropdown(
 			id='country_dropdown',
 			options=countries_option,
@@ -129,9 +133,10 @@ def create_layout(app):
 					'data': [
 						go.Pie(
 							labels=["Cases", "Deaths"],
-							values=[+recent_data_point.total_cases, +recent_data_point.total_deaths],
+							values=[recent_data_point.total_cases, recent_data_point.total_deaths],
 							hole=0.5)
-						]
+						],
+					'layout': {"title": {"text": recent_data_point.date }}
 					}
 				)
 			])
