@@ -8,7 +8,8 @@ from dash.dependencies import Input, Output
 from pages import (
 	display,
 	nationalDisplay,
-	internationalDisplay
+	internationalDisplay,
+    headerComponent
 	)
 
 # import pandas as pd
@@ -17,11 +18,7 @@ external_css = ["https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normaliz
                	"https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css",
                	"https://fonts.googleapis.com/css?family=Raleway:400,300,600",
                 "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
-                # "https://raw.githubusercontent.com/plotly/dash-sample-apps/master/apps/dash-financial-report/assets/base.css",
-                'https://codepen.io/chriddyp/pen/bWLwgP.css',
-                "https://codepen.io/bcd/pen/KQrXdb.css",
-                "https://codepen.io/dmcomfort/pen/JzdzEZ.css",]
-                # "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"]
+                "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"]
 
 external_js = ["https://code.jquery.com/jquery-3.2.1.min.js",
                "https://codepen.io/bcd/pen/YaXojL.js"]
@@ -59,10 +56,18 @@ app.index_string = '''
 '''
 app.title = 'Covid19 Reports'
 
+CONTENT_STYLE = {
+    "marginLeft": "325px",
+    "marginRight": "2rem",
+    "marginTop": "2rem",
+    "padding": "4rem 1rem",
+}
+
 def default_layout(): 
     return html.Div([
     	dcc.Location(id='url', refresh=False),
-    	html.Div(id='page-content')
+        headerComponent.Header(),
+    	html.Div(id='page-content', style=CONTENT_STYLE)
     ])
 
 app.layout = default_layout()
