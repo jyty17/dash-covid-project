@@ -61,7 +61,15 @@ CONTENT_STYLE = {
     "marginRight": "2rem",
     "marginTop": "2rem",
     "padding": "4rem 1rem",
-}
+    }
+
+COLORS = {
+    "Medium Purple": "9b85ff",
+    "Space Cadet": "1d3461",
+    "Yale Blue": "1f487e",
+    "Maize Crayola": "fac748",
+    "Lavender Blush": "f9e9ec"
+    }
 
 def default_layout(): 
     return html.Div([

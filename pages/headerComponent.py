@@ -45,7 +45,11 @@ def get_logo():
 def get_header():
     header = html.Div([
         html.Div([
-            html.H1('Covid-19 Case Report', style={"font-size": "5rem"})
+            html.A(
+                html.H1('Covid-19 Case Report', style={"font-size": "5rem"}),
+                href='/',
+                className='text-decoration-none header-title'
+                )
         ], style={
             "color": "#1D3461"
             })

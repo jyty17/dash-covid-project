@@ -10,3 +10,9 @@
 			-webkit-transform: rotate(360deg);
 	}
 }
+
+.header-title,
+.header-title:hover {
+  color: inherit;
+  text-decoration: none;
+}

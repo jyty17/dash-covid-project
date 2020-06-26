@@ -2,7 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-import plotly.graph_objs as go
+import plotly.graph_objects as go
 
 from .headerComponent import Header
 
@@ -55,6 +55,7 @@ country_first = df[df.location == countries[0]]
 
 def create_layout(app):
 	recent_data_point = df[df.location == countries[0]].tail(1)
+	print(type(recent_data_point.total_cases))
 	internationalDisplay = html.Div([
 		html.H1("Worldwide data on Covid-19 (OWID)", 
 			style={
@@ -114,7 +115,7 @@ def create_layout(app):
 					},
 					className="w-50"
 				)
-			], className="d-flex flex-row justify-content-between", style={"height": "50vh"}),
+			], className="d-flex flex-row justify-content-between", style={"height": "40vh"}),
 		html.Div([
 			html.H1(children="Last Updated: "+recent_data_point.date, className=""),
 			html.Div([
@@ -132,14 +133,30 @@ def create_layout(app):
 				figure={
 					'data': [
 						go.Pie(
-							labels=["Cases", "Deaths"],
-							values=[recent_data_point.total_cases, recent_data_point.total_deaths],
+							labels=['Cases', 'Deaths'],
+							values=[int(recent_data_point.total_cases), int(recent_data_point.total_deaths)],
 							hole=0.5)
 						],
 					'layout': {"title": {"text": recent_data_point.date }}
-					}
+					},
+					className="w-50"
+				),
+			dcc.Graph(
+				id='country_current',
+				figure={
+					'data': [
+						go.Bar(
+							x=["Cases", "Deaths"],
+							y=[int(recent_data_point.new_cases), int(recent_data_point.new_deaths)],
+							marker_color=['firebrick', 'darkslateblue'],
+							width=[0.5]*2
+							)
+						],
+					'layout': {"title": {"text": recent_data_point.date }}
+					},
+					className="w-50"
 				)
-			])
+			], className='d-flex flex-row justify-content-between')
 		
 		], className="page")
 
