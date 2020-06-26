@@ -55,13 +55,10 @@ country_first = df[df.location == countries[0]]
 
 def create_layout(app):
 	recent_data_point = df[df.location == countries[0]].tail(1)
-	print(type(recent_data_point.total_cases))
+	# print(type(recent_data_point.total_cases))
 	internationalDisplay = html.Div([
 		html.H1("Worldwide data on Covid-19 (OWID)", 
-			style={
-				"font-size": "5rem",
-				"color": "#1D3461"
-			}),
+			className="content-title"),
 		dcc.Dropdown(
 			id='country_dropdown',
 			options=countries_option,

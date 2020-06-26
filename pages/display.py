@@ -59,12 +59,12 @@ fig.update_layout(
 # 	col=2)
 
 last = gc.tail(1)
-print(last, '\n', last['date'])
+# print(last, '\n', last['date'])
 
 def create_layout(app):
 	default_display = html.Div([
 		html.Div([
-			Header(),
+			html.H1("Overview", className="content-title"),
 		    dcc.Graph(
 		    	id="general_graph",
 		    	figure=fig

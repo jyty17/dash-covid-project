@@ -21,35 +21,37 @@ states = df.state.unique()
 states.sort()
 states_option = [{'label': x, 'value': x} for x in states]
 
-first = df[df.state == states[0]]
+state_first = df[df.state == states[0]]
 fig = go.Figure()
 fig.add_trace(
 	go.Scatter(
-		y=first.cases,
-		x=first.date,
+		y=state_first.cases,
+		x=state_first.date,
 		mode='lines',
 		name='Infected',
 		line={'color': 'firebrick'}
 	))
 fig.add_trace(
 	go.Scatter(
-		y=first.deaths,
-		x=first.date,
+		y=state_first.deaths,
+		x=state_first.date,
 		mode='lines',
 		name='Deaths',
 		line={'color': 'darkslateblue'}
 	))
 fig.update_layout(
-	title='Global No. of Infected and Deaths Due to CoVid-19',
+	title='National No. of Infected and Deaths Due to CoVid-19',
 	plot_bgcolor=colors['background'],
 	)
 
 
 def create_layout(app):
 	recent_data_point = df[df.state == states[0]].tail(1)
+	print(recent_data_point)
 	nationalDisplay = html.Div([
 		Header(),
-		html.H1("USA data on Covid-19 (NYTimes)"),
+		html.H1("USA data on Covid-19 (NYTimes)",
+			className="content-title"),
 		dcc.Dropdown(
 			id='state_dropdown',
 			options=states_option,
@@ -57,19 +59,38 @@ def create_layout(app):
 			),
 		dcc.Graph(
 			id='national_graph',
-			figure=fig
+			figure={
+				'data': [
+					go.Scatter(
+						y=state_first.cases,
+						x=state_first.date,
+						mode='lines',
+						name='Infected',
+						line={'color': 'firebrick'}
+					),
+					go.Scatter(
+						y=state_first.deaths,
+						x=state_first.date,
+						mode='lines',
+						name='Deaths',
+						line={'color': 'darkslateblue'}
+					)
+				],
+				'layout': go.Layout(title=states[0])
+
+			}
 			),
 		html.Div([
-			html.H4(children="Last Updated: "+recent_data_point.date, className=""),
+			html.H1(children="Last Updated: "+recent_data_point.date, className=""),
 			html.Div([
-				html.H4('Total Infected'),
-				html.H5(children=recent_data_point.cases ,id='state-infected'),
+				html.H2('Total Infected'),
+				html.H2(children=recent_data_point.cases ,id='state-infected'),
 				], className='row tab'),
 			html.Div([
-				html.H4('Total Deaths'),
-				html.H5(children=recent_data_point.deaths ,id='state-deaths')
+				html.H2('Total Deaths'),
+				html.H2(children=recent_data_point.deaths ,id='state-deaths')
 				], className='row tab')
-			])
+			], className="d-flex flex-row justify-content-between w-75")
 		], className="page")
 
 	@app.callback(
