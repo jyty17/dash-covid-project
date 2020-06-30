@@ -136,7 +136,7 @@ def create_layout(app):
 						],
 					'layout': {"title": {"text": recent_data_point.date }}
 					},
-					className="w-50"
+				className="w-50"
 				),
 			dcc.Graph(
 				id='country_current',
@@ -151,22 +151,30 @@ def create_layout(app):
 						],
 					'layout': {"title": {"text": recent_data_point.date }}
 					},
-					className="w-50"
+				className="w-50"
 				)
 			], className='d-flex flex-row justify-content-between')
 		
 		], className="page")
 
 	@app.callback(
-		[Output('country_graph', 'figure'),
-		Output('country_velocity', 'figure')],
+		[
+		Output('country-cases', 'children'),
+		Output('country-deaths', 'children'),
+		Output('country_graph', 'figure'),
+		Output('country_velocity', 'figure'),
+		Output('country_percentages', 'figure'),
+		Output('country_current', 'figure')
+		],
 		[Input('country_dropdown', 'value')]
 		)
 	def update_country_data(dropdown_value):
-		print(df[df.location == dropdown_value])
+		# print(df[df.location == dropdown_value])
 
 		country_data = df[df.location == dropdown_value]
 		date_axis = country_data.date
+
+		country_data_last = country_data.tail(1)
 
 		cases = go.Scatter(
 			y=country_data.total_cases,
@@ -195,7 +203,21 @@ def create_layout(app):
 			mode='lines',
 			name='New Deaths')
 
+		new_percentage = go.Pie(
+			labels=['Cases', 'Deaths'],
+			values=[int(country_data_last.total_cases), int(country_data_last.total_deaths)],
+			hole=0.5)
+
+		new_current = go.Bar(
+			x=["Cases", "Deaths"],
+			y=[int(country_data_last.new_cases), int(country_data_last.new_deaths)],
+			marker_color=['firebrick', 'darkslateblue'],
+			width=[0.5]*2
+			)
+
 		newFigs = [
+			country_data_last['total_cases'], 
+			country_data_last['total_deaths'],
 			{
 				'data': [cases, deaths],
 				'layout': go.Layout(
@@ -206,20 +228,28 @@ def create_layout(app):
 			{
 				'data': [new_cases, new_deaths],
 				'layout': go.Layout(title='Trends')
+			},
+			{
+				'data': [new_percentage],
+				'layout': {"title": {"text": country_data_last.date }}
+			},
+			{
+				'data': [new_current],
+				'layout': {"title": {"text": country_data_last.date }}
 			}
 		]
 		return newFigs
 
-	@app.callback(
-		[
-		Output('country-cases', 'children'),
-		Output('country-deaths', 'children')
-		],
-		[Input('country_dropdown', 'value')]
-		)
-	def update_counts(dropdown_value):
-		last = df[df.location == dropdown_value].tail(1) #
-		return last['total_cases'], last['total_deaths']
+	# @app.callback(
+	# 	[
+	# 	Output('country-cases', 'children'),
+	# 	Output('country-deaths', 'children')
+	# 	],
+	# 	[Input('country_dropdown', 'value')]
+	# 	)
+	# def update_counts(dropdown_value):
+	# 	last = df[df.location == dropdown_value].tail(1) #
+	# 	return last['total_cases'], last['total_deaths']
 
 
 	return internationalDisplay

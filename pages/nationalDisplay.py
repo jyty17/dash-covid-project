@@ -47,7 +47,8 @@ fig.update_layout(
 
 def create_layout(app):
 	recent_data_point = df[df.state == states[0]].tail(1)
-	print(recent_data_point)
+	recent_update = df[df.date == recent_data_point.date.values[0]]
+	print(recent_update)
 	nationalDisplay = html.Div([
 		Header(),
 		html.H1("USA data on Covid-19 (NYTimes)",
@@ -80,6 +81,23 @@ def create_layout(app):
 
 			}
 			),
+		# dcc.Graph(
+		# 	id='national_map',
+		# 	figure={
+		# 		'data': [
+		# 			go.Choropleth(
+		# 			    locations=df['code'],
+		# 			    z=df['total exports'].astype(float),
+		# 			    locationmode='USA-states',
+		# 			    colorscale='Reds',
+		# 			    autocolorscale=False,
+		# 			    text=df['text'], # hover text
+		# 			    marker_line_color='white', # line markers between states
+		# 			    colorbar_title="Millions USD"
+		# 			)
+		# 		]
+		# 	}
+		# 	)
 		html.Div([
 			html.H1(children="Last Updated: "+recent_data_point.date, className=""),
 			html.Div([
@@ -155,6 +173,18 @@ def create_layout(app):
 	def update_counts(dropdown_value):
 		last = df[df.state == dropdown_value].tail(1)
 		return last['cases'], last['deaths']
+
+
+	# @app.callback(
+	# 	[Output()],
+	# 	[Input()]
+	# 	)
+	# def update_movers(date):
+	# 	_date = df.date.unique()
+	# 	_date.sort()
+	# 	day = _date[-1]
+		
+	# 	top_movers = df[df.location == date].sort_values(by=['new_cases'], ascending=False).head(10)
 
 
 	return nationalDisplay
