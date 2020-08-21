@@ -9,6 +9,7 @@ from pages import (
 	display,
 	nationalDisplay,
 	internationalDisplay,
+    sourcesDisplay,
     headerComponent
 	)
 
@@ -96,6 +97,8 @@ def display_page(pathname):
 		return nationalDisplay.create_layout(app)
 	elif pathname == '/international':
 		return internationalDisplay.create_layout(app)
+	elif pathname == '/sources':
+		return sourcesDisplay.create_layout(app)
 	else:
 		return display.create_layout(app)
 

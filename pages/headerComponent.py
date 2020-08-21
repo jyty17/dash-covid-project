@@ -75,11 +75,13 @@ def get_menu():
 
         dcc.Link('USA   ', href='/national', className="text-white py-2", style=ANCHOR_STYLE),
 
-        html.A('OWID   ', href='https://github.com/owid/covid-19-data/tree/master/public/data/', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
+        dcc.Link('Sources   ', href='/sources', className="text-white py-2", style=ANCHOR_STYLE),
 
-        html.A('NYTimes   ', href='https://github.com/nytimes/covid-19-data', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
+        # html.A('OWID   ', href='https://github.com/owid/covid-19-data/tree/master/public/data/', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
 
-        html.A('Github   ', href='/cc-travel-report/metasearch-and-travel-ads/', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
+        # html.A('NYTimes   ', href='https://github.com/nytimes/covid-19-data', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
+
+        html.A('Github   ', href='https://github.com/jyty17/dash-covid-project', target="_blank", className="text-white py-2", style=ANCHOR_STYLE),
 
     ], className="btn-group-vertical", style=MENU_STYLE)
     return menu
